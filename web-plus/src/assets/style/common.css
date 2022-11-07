@@ -1,0 +1,194 @@
+:root{
+    --hover_color: #3370ff;
+}
+/*!*html,*!*/
+/*!*body,*!*/
+/*!*div,*!*/
+/*span,*/
+/*applet,*/
+/*object,*/
+/*iframe,*/
+/*h1,*/
+/*h2,*/
+/*h3,*/
+/*h4,*/
+/*h5,*/
+/*h6,*/
+/*p,*/
+/*blockquote,*/
+/*pre,*/
+/*a,*/
+/*abbr,*/
+/*acronym,*/
+/*address,*/
+/*big,*/
+/*cite,*/
+/*code,*/
+/*del,*/
+/*dfn,*/
+/*em,*/
+/*img,*/
+/*ins,*/
+/*kbd,*/
+/*q,*/
+/*s,*/
+/*samp,*/
+/*small,*/
+/*strike,*/
+/*strong,*/
+/*sub,*/
+/*sup,*/
+/*tt,*/
+/*var,*/
+/*dl,*/
+/*dt,*/
+/*dd,*/
+/*ol,*/
+/*ul,*/
+/*li,*/
+/*fieldset,*/
+/*form,*/
+/*label,*/
+/*legend,*/
+/*table,*/
+/*caption,*/
+/*tbody,*/
+/*tfoot,*/
+/*thead,*/
+/*tr,*/
+/*th,*/
+/*td {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+/*body{*/
+/*    font-size: 14px;*/
+/*}*/
+body,
+ul,
+li,
+img{
+    margin: 0;
+    padding: 0;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: 0;
+}
+
+button:focus,
+input:focus,
+optgroup:focus,
+select:focus,
+textarea:focus {
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+img {
+    border: 0;
+    vertical-align: bottom;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+a, a:hover, a:active, a:visited, a:link, a:focus {
+    outline: none;
+    background: none;
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+/*h1,*/
+/*h2,*/
+/*h3,*/
+/*h4,*/
+/*h5,*/
+/*h6 {*/
+/*    font-size: 100%;*/
+/*    font-weight: 400;*/
+/*    font-variant: normal;*/
+/*}*/
+.el-container *{
+    box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+    overflow: hidden;
+}
+
+.clear-p-t {
+    padding-top: 0 !important;
+}
+
+.clear-margin {
+    margin: 0 !important;
+}
+
+.clear-b-margin {
+    margin-bottom: 0 !important;
+}
+
+.el-header, .el-main, .el-footer {
+    padding: 0;
+}
+
+
+/* 整个滚动条 */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* 滚动条有滑块的轨道部分 */
+::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+/* 滚动条滑块(竖向:vertical 横向:horizontal) */
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background-color: #28f;
+    border-radius: 5px;
+}
+
+/* 滚动条滑块hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #2aecbf;
+}
+
+/* 同时有垂直和水平滚动条时交汇的部分 */
+::-webkit-scrollbar-corner {
+    display: block;
+}
+
+/* 修复交汇时出现的白块 */
+
