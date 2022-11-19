@@ -1,32 +1,26 @@
-# Xanadu-web
-
-## 安装依赖
+# web-plus
+这是前端的项目，启动项目请先安装依赖包，依赖包在
+node_modules目录，也就是说，你必须确保该目录存在才去启动项目。
+## 项目相关的命令
+### 安装依赖包
 ```
-npm install
-```
-
-### 本地开发 启动项目
-```
-npm run dev
+yarn install
 ```
 
-### 构建项目，进行打包
+### 开发模式下启动项目
 ```
-npm run build
+yarn serve
 ```
 
+### 打包到生产环境
+```
+yarn build
+```
 
-### 构建时特殊依赖包
-image-webpack-loader使用 npm install 容易安装失败，导致导包构建失败
-1. 若安装过 image-webpack-loader 先卸载
+### eslint语法修复
 ```
-npm uninstall image-webpack-loader
+yarn lint
 ```
-2. 使用 cnpm , 安装 cnpm 然后将全局的 registry 设置成阿里的镜像，国内阿里比较快
-```
-npm install cnpm -g --registry=https://registry.npm.taobao.org
-```
-3. 使用 cnpm 安装  image-webpack-loader
-```
-cnpm install --save-dev  image-webpack-loader 
-```
+
+### 关于vue.config的更多配置
+See [Configuration Reference](https://cli.vuejs.org/config/).
