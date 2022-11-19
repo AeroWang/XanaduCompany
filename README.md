@@ -1,16 +1,21 @@
-**写在前面，大佬们如果有什么建议尽管提哦**
-
 ## 一、采用技术方案
 
 该系统采用的主要技术如下：
-
+> Vue2 
 1. [Vue.js](https://cn.vuejs.org/v2/guide/index.html)
-2. [Element Ui](https://element.eleme.cn/#/zh-CN/component/installation)
+2. [Element U](https://element.eleme.cn/#/zh-CN/component/installation)
 3. [axios](http://www.axios-js.com/zh-cn/docs/index.html)
 4. [node.js](https://nodejs.org/zh-cn/docs/)
 5. [Sequelize](https://www.sequelize.com.cn/)
 6. [Koa](https://koa.bootcss.com/)
 7. MySQL数据库
+
+
+> 2022.11.19 更新
+>
+> Vue3 [新分支](https://github.com/AeroWang/XanaduCompany/tree/vue3)； 由 `zerotower69` 开发
+
+- 更新为 Vue3 + TS + Element Plus
 
 ## 二、开发环境
 
@@ -44,3 +49,8 @@ server---后端服务
 ## 五、补充说明
 
 由于本系统进行了CDN加载资源优化，所以运行本系统务必连接一个比较快速稳定的网络，否则系统页面将会出现一些错误！
+
+> 2022.11.19 更新
+
+部分资源引用来源于 cdn.jsdelivr.net，目前（2022.11.19）访问可能有些慢，有兴趣的可以自己修改引用链接
+
