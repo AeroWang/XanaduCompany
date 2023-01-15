@@ -4,7 +4,7 @@ import request from '@/utils/request'
  * @param queryString
  * @returns
  */
-export const searchNews = (queryString: string) => {
+export const searchNewsList = (queryString: string) => {
   return request.get('/v1/web/searchnews/' + queryString)
 }
 
