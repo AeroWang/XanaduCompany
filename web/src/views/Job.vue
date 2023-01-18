@@ -5,11 +5,15 @@
       <div class="banner">和优秀的人，做有挑战的事</div>
       <!-- 搜索 -->
       <div class="search-wrapper" :class="{ fixedTop: searchBarFixedTop }">
-        <el-input :class="[{ 'medium': searchBarFixedTop }, 'small']" placeholder="搜索职位" @change="search"
+        <el-input :class="[{ medium: searchBarFixedTop }, 'small']" placeholder="搜索职位" @change="search"
           v-model="searchKeyword">
-          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          <template #prefix>
+            <el-icon>
+              <Search />
+            </el-icon>
+          </template>
         </el-input>
-        <el-button :class="[{ 'medium': searchBarFixedTop }, 'small']" type="primary" round @click="search">搜索
+        <el-button :class="[{ medium: searchBarFixedTop }, 'small']" type="primary" round @click="search">搜索
         </el-button>
       </div>
       <div class="main">
@@ -26,15 +30,17 @@
           </div>
           <div class="city-category job-filter-block">
             <div class="title">城市</div>
-            <checkbox-and-dropdown @changed="cityChange" :data="jobCities" :cityList="this.location_code_list">{{
-                location_code_list
+            <checkbox-and-dropdown @changed="cityChange" :data="jobCities" :cityList="location_code_list">{{
+              location_code_list
             }}
             </checkbox-and-dropdown>
           </div>
         </div>
         <div class="content">
-          <h2 class="content-title" v-show="results.total > 0">开启新的工作 ({{ results.total }})</h2>
-          <h2 class="content-title" v-show="!results.total > 0">开启新的工作 (0)</h2>
+          <h2 class="content-title" v-show="results.total > 0">
+            开启新的工作 ({{ results.total }})
+          </h2>
+          <h2 class="content-title" v-show="!(results.total > 0)">开启新的工作 (0)</h2>
           <ul class="content-list">
             <li class="content-item is-hover-shadow" v-for="item in results.job_post_list" :key="item.id">
               <router-link :to="`/job/${item.id}`">
@@ -59,39 +65,47 @@
   </div>
 </template>
 <script lang="ts" setup>
-import AwHeader from '@/components/public/Header.vue'
-import AwFooter from '@/components/public/Footer.vue'
-import CheckboxAndDropdown from '@/components/CheckboxAndDropdown.vue'
+import AwHeader from "@/components/public/Header.vue";
+import AwFooter from "@/components/public/Footer.vue";
+import CheckboxAndDropdown from "@/components/CheckboxAndDropdown.vue";
 
-import mainStore from '@/store'
-import { onBeforeRouteLeave } from 'vue-router'
-import { computed, onBeforeMount, onMounted, onUnmounted, ref } from 'vue'
-import { getJobListApi } from '@/apis/job'
+import mainStore from "@/store";
+import { onBeforeRouteLeave } from "vue-router";
+import { computed, onBeforeMount, onMounted, onUnmounted, ref, reactive } from "vue";
+import { getJobListApi, getJobFilter } from "@/apis/job";
+import { Search } from "@element-plus/icons-vue";
 
-const jobCategories = ref([])
+const jobCategories = ref([]);
 const jobCategoryProps = ref({
-  children: 'children',
-  label: 'name'
-})
-const jobCities = ref([])
-const job_category_id_list = ref([])
-const location_code_list = ref([])
-const searchBarFixedTop = ref(false)
-
-const searchKeyword = ref('')
-const currentPage = ref(1)
-const pageSize = ref(10)
-const cityList = ref([])
-const cities = ref([])
-const results = ref([])
-const loading = ref(false)
+  children: "children",
+  label: "name",
+});
+const jobCities = ref([]);
+const job_category_id_list = ref([]);
+const location_code_list = ref([]);
+const searchBarFixedTop = ref(false);
+const searchKeyword = ref("");
+const currentPage = ref(1);
+const pageSize = ref(10);
+const cityList = ref([]);
+const cities = ref([]);
+const results = ref<{
+  total: number;
+  job_post_list: any[];
+  limit: number;
+}>({
+  total: 0,
+  job_post_list: [],
+  limit: 0,
+});
+const loading = ref(false);
 const locationCodeProps = ref({
-  label: 'name'
-})
-const singlePage = ref(false)
-const checked = ref(false)
-const scrollTop = ref(0)
-const oldScrollTop = ref(0)
+  label: "name",
+});
+const singlePage = ref(false);
+const checked = ref(false);
+const scrollTop = ref(0);
+const oldScrollTop = ref(0);
 
 const queryFilter = computed(() => {
   return {
@@ -99,105 +113,108 @@ const queryFilter = computed(() => {
     location_code_list: location_code_list.value,
     keyword: searchKeyword.value,
     pagesize: pageSize.value,
-    currentPage: currentPage.value
-  }
-})
-const clearable = computed(() => job_category_id_list.value.length !== 0 ||
-  location_code_list.value.length != 0
-)
+    currentPage: currentPage.value,
+  };
+});
+const clearable = computed(
+  () => job_category_id_list.value.length !== 0 || location_code_list.value.length != 0
+);
 
 onBeforeMount(() => {
-  getJobConfigRequest()
-  getJobList()
-})
+  getJobConfigRequest();
+  getJobList();
+});
 
 onMounted(() => {
-  mainStore.commit('setHeaderLogo', {
-    headerLogoShow: false
-  })
-  mainStore.commit('setShadowActive', {
-    headerShadowActive: false
-  })
-  mainStore.commit('setNavDarkActive', {
-    navDarkActive: true
-  })
-  mainStore.commit('setHeaderShow', {
-    headerShow: false
-  })
-  window.addEventListener('scroll', scrollHandle)
-})
+  mainStore.commit("setHeaderLogo", {
+    headerLogoShow: false,
+  });
+  mainStore.commit("setShadowActive", {
+    headerShadowActive: false,
+  });
+  mainStore.commit("setNavDarkActive", {
+    navDarkActive: true,
+  });
+  mainStore.commit("setHeaderShow", {
+    headerShow: false,
+  });
+  window.addEventListener("scroll", scrollHandle);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', scrollHandle)
-})
+  window.removeEventListener("scroll", scrollHandle);
+});
 
 function scrollHandle() {
   scrollTop.value =
-    document.documentElement.scrollTop ||
-    window.pageYOffset ||
-    document.body.scrollTop
-  oldScrollTop.value = scrollTop.value
+    document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  oldScrollTop.value = scrollTop.value;
   if (scrollTop.value >= 350) {
-    mainStore.commit('setHeaderShow', {
-      headerShow: true
-    })
+    mainStore.commit("setHeaderShow", {
+      headerShow: true,
+    });
   } else {
-    mainStore.commit('setHeaderShow', {
-      headerShow: false
-    })
+    mainStore.commit("setHeaderShow", {
+      headerShow: false,
+    });
   }
-  searchBarFixedTop.value = scrollTop.value >= 430
+  searchBarFixedTop.value = scrollTop.value >= 430;
 }
 
 function search() {
-  getJobList()
+  getJobList();
 }
 
-function clearFilter() {
-
-}
+function clearFilter() { }
 
 // 请求职位列表
 async function getJobList() {
-  results.value = []
-  loading.value = true
-  const { data: res } = await getJobListApi()
+  loading.value = true;
+  const { data: res } = await getJobListApi({
+    currentPage: currentPage.value,
+    job_category_id_list: job_category_id_list.value,
+    pageSize: pageSize.value,
+    keyword: searchKeyword.value,
+    location_code_list: location_code_list.value,
+  });
   if (res.status === 200) {
-    results.value = res.data
-    loading.value = false
+    results.value = res.data;
+    loading.value = false;
     if (results.value.total <= results.value.limit) {
-      singlePage.value = true
+      singlePage.value = true;
     }
   }
 }
 
 // 请求筛选条件
 async function getJobConfigRequest() {
-
+  const { data: res } = await getJobFilter();
+  if (res.status === 200) {
+    jobCities.value = res.data.city_list;
+    jobCategories.value = res.data.job_type_list;
+  }
 }
 
-function jobCategoryChange() {
-
-}
+function jobCategoryChange() { }
 
 function cityChange(value: any) {
-  location_code_list.value = value
-  getJobList()
+  location_code_list.value = value;
+  getJobList();
 }
 
 onBeforeRouteLeave((to, from, next) => {
-  if (from.name === 'Product') {
-    mainStore.commit('setNavDarkActive', {
-      navDarkActive: false
-    })
-    mainStore.commit('setHeaderLogo', {
-      headerLogoShow: true
-    })
-    next()
+  if (from.name === "Product") {
+    mainStore.commit("setNavDarkActive", {
+      navDarkActive: false,
+    });
+    mainStore.commit("setHeaderLogo", {
+      headerLogoShow: true,
+    });
+    next();
   }
-})
+});
 </script>
-<style lang = "less" scoped>
+<style lang="less" scoped>
 .job_header {
   background-color: rgba(255, 255, 255, 1);
   backdrop-filter: blur(10px);
@@ -209,7 +226,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
 
   * {
-    box-sizing: border-box
+    box-sizing: border-box;
   }
 
   .banner {
@@ -239,11 +256,11 @@ onBeforeRouteLeave((to, from, next) => {
     transform: translateY(0);
     padding: 15px 0;
     z-index: 1000;
-    background-color: #fff;
+    // background-color: #fff;
     transition: all 0.3s;
   }
 
-  .el-input {
+  :deep(.el-input) {
     width: 50%;
     left: 50%;
     transform: translateX(-50%);
@@ -251,11 +268,15 @@ onBeforeRouteLeave((to, from, next) => {
     &.medium {
       width: 64%;
     }
+
+    .el-input__wrapper {
+      border-radius: 30px;
+    }
   }
 
   :deep(.el-input__inner) {
     height: 50px;
-    border-radius: 25px;
+    border-radius: 30px;
   }
 
   .el-button {
@@ -341,7 +362,7 @@ onBeforeRouteLeave((to, from, next) => {
   .content-item {
     //margin-bottom: 20px;
     padding: 20px;
-    transition: box-shadow .5s;
+    transition: box-shadow 0.5s;
 
     &.is-hover-shadow:hover {
       box-shadow: 0 8px 24px 0 rgba(187, 191, 196, 0.2);
@@ -390,8 +411,7 @@ onBeforeRouteLeave((to, from, next) => {
 }
 </style>
 
-
-<style lang = "less">
+<style lang="less">
 .el-tree {
   color: @primary-text-color;
   font-size: 14px;

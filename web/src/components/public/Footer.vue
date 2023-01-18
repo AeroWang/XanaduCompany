@@ -64,11 +64,11 @@ const footerHeight = ref('')
 const curWidth = ref('')
 const logo_url = ref<any>()
 logo_url.value = require('../../assets/img/index/logoColor.png')
-const concat_way = ref<ConcatItem[]>([])
+const contact_way = ref<ConcatItem[]>([])
 const focus_icon = ref<FocusItem[]>([])
 
 onMounted(() => {
-  concat_way.value =
+  contact_way.value =
         [
           {
             name: '媒体问询',
