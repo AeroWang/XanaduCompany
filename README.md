@@ -18,13 +18,8 @@
 - 更新为 Vue3 + TS + Element Plus
 
 ## 二、开发环境
-
-1. 操作系统：Windows10
-2. 数据库：MySQL（v5.7.7-rc-log，版本号须大于5.7）
-3. Web服务器：Nginx 
-4. 开发工具：Webstorm
-5. 系统基础环境：Node.js
-6. 浏览器：谷歌浏览器
+1. 数据库：MySQL（v5.7.7-rc-log，版本号须大于5.7）
+2. 系统基础环境：Node.js
 
 ## 三、目录说明
 
@@ -46,7 +41,27 @@ server---后端服务
 
      也可以在进行注册
 
-## 五、补充说明
+## 五、如何本地运行
+
+1. 先启动后端(server目录下)
+```bash
+npm install
+
+npm run start(本地启动)
+
+或者 npm run dev(实时监听改动重启)
+```
+2. 启动前端（web 或者 admin目录下）
+```bash
+# 1.安装
+npm install / yarn install
+# 2.启动
+npm run dev / yarn dev
+# 3.打包
+npm run build / yarn build
+```
+
+## 六、补充说明
 
 由于本系统进行了CDN加载资源优化，所以运行本系统务必连接一个比较快速稳定的网络，否则系统页面将会出现一些错误！
 
