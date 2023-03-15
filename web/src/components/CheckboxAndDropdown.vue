@@ -2,7 +2,7 @@
  * @Author: zerotower69 zerotower@163.com
  * @Date: 2022-11-20 22:11:55
  * @LastEditors: zerotower69 zerotower@163.com
- * @LastEditTime: 2023-01-18 21:24:10
+ * @LastEditTime: 2023-03-02 23:39:27
  * @FilePath: /XanaduCompany/web/src/components/CheckboxAndDropdown.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -57,7 +57,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, defineProps,defineEmits,computed,watch} from "vue"
-import { Search,Plus } from "@element-plus/icons-vue"
+import { Search, Plus } from "@element-plus/icons-vue"
 const props = defineProps({
     data: {
         type:Array
@@ -66,7 +66,6 @@ const props = defineProps({
         type:Array
     }
 })
-
 const emits = defineEmits(['changed'])
 
 const checked_list = ref<any[]>([])
@@ -89,6 +88,17 @@ const filterableData = computed<any[]>(() =>
 })
 )
 const search_el_icon = computed(() => focusing.value ? 'el-icon-search' : 'el-icon-plus')
+
+//利用正则表达式判断邮箱
+const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+
+// 1-100中能被3整除的数字
+const is_valid_number = (num: any) => {
+  return num % 3 === 0
+}
+
+
+
 
 watch(() => props.data, (val) => {
     targets.value=val?.slice(0,6).map((item:any)=>item.code) ?? []
