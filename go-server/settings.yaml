@@ -1,0 +1,22 @@
+mysql:   # mysql 相关配置
+  host: 127.0.0.1
+  port: 3306
+  config: "charset=utf8mb4&parseTime=true&loc=Local"
+  db: XiaoduCompany
+  user: root
+  password: 12345678
+  idle: 3000
+  max: 5
+  min: 0
+  log_level:
+logger:
+  level: info
+  prefix: '[xiaodu-company]'
+  director: log
+  show_line: true
+  log_in_console: "true"
+system:
+  host: 0.0.0.0
+  port: 3000
+  env: release
+
