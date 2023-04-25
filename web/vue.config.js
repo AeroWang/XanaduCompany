@@ -22,17 +22,15 @@ const cdn = {
   // 生产环境
   build: {
     css: [
-      'https://cdn.jsdelivr.net/npm/element-ui@2.15.1/lib/theme-chalk/index.css',
-      'https://cdn.jsdelivr.net/npm/element-ui@2.15.1/lib/theme-chalk/display.css',
-      'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/css/index.css'
+      'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-5-y/element-ui/2.15.1/theme-chalk/index.min.css',
     ],
     js: [
-      'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js',
-      'https://cdn.jsdelivr.net/npm/vue-router@3.2.0/dist/vue-router.min.js',
-      'https://cdn.jsdelivr.net/npm/vuex@3.4.0/dist/vuex.min.js',
-      'https://cdn.jsdelivr.net/npm/element-ui@2.15.1/lib/index.js',
+      'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-5-y/vue/2.6.11/vue.min.js',
+      'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-5-y/vue-router/3.2.0/vue-router.min.js',
+      'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-5-y/vuex/3.6.1/vuex.min.js',
+      'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-5-y/element-ui/2.15.1/index.min.js',
       // 'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/mavon-editor.min.js',
-      'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js'
+      'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-5-y/axios/0.18.0/axios.min.js'
       // 'https://unpkg.com/element-ui/lib/index.js'
     ]
   }
@@ -100,13 +98,6 @@ module.exports = {
         args[0].title = 'Xanadu'
         return args
       })
-      // 压缩图片
-      config.module
-        .rule('images')
-        .use('image-webpack-loader')
-        .loader('image-webpack-loader')
-        .options({ bypassOnDebug: true })
-        .end()
     })
     // 开发阶段
     config.when(process.env.NODE_ENV === 'development', config => {
