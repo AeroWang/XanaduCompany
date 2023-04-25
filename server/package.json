@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start":"node app.js",
-    "dev":"nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "clear": "npx rimraf node_modules"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,7 @@
     "sequelize-auto": "^0.8.2"
   },
   "devDependencies": {
-    "eslint": "^7.25.0"
+    "eslint": "^7.25.0",
+    "rimraf": "^5.0.0"
   }
 }

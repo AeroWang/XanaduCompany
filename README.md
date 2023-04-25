@@ -66,6 +66,8 @@ npm install / yarn install
 npm run dev / yarn dev
 # 3.打包
 npm run build / yarn build
+# 4.清除 node_modules
+npm run clear / yarn clear
 ```
 yarn命令请提前全局安装
 ```bash
@@ -97,6 +99,21 @@ npm i yarn -g
 brew install nvm
 ```
 安装了nvm你就可以使用其切换node的版本了，nvm install xxx是安装命令，每次切换记得使用nvm use xxx切换到你想使用的版本。
+
+7.web项目使用了CDN,你如果不想使用，请注释掉配置中external中的逻辑；如果使用，请检查相关的CDN链接是否能正常访问，直接粘贴到浏览器你就可以检查了，并正确配置你的external。
+
+8.关于使用proxy，请一定要在生产环境nginx中配置反向代理。
+
+9.后端node当下确实没有合适的打包方案，一般直接服务器使用pm2启动node服务，请在服务端安装pm2使用:
+
+```bash
+npm i pm2 -g
+```
+
+如果确实需要打包，请知乎查阅文章，百度的质量不太行。但这里的打包和java等的概念不一样的，即使用webpack打包，你的代码还是js而不是像java那样经过编译器转为字节码，node的本质是c++(因为node严谨来说是一个javascript运行时而不是一门新的语言，只是c++编写的V8内核提供了node的这些API，真正负责和系统交互语言是c++)，你使用的语言仍然是javascript。
+
+10.新手请注意辨明前端打包的目的，当前我们写的代码是浏览器不能直接运行的，我们需要将我们的代码转为浏览器可识别并执行的格式，本质上是js到另一种j s规范的过程，和后端意义的打包完全不同。
+
 ## 七、最后的最后
 
 记得给star哦ღ( ´･ᴗ･` )~

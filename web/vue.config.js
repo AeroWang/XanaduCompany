@@ -8,7 +8,7 @@ const externals = {
   vue: 'Vue',
   'vue-router': 'VueRouter',
   vuex: 'Vuex',
-  'element-ui': 'ElementUI',
+  'element-plus': 'ElementPlus',
   // 'mavon-editor': 'mavonEditor',
   axios: 'axios'
 }
@@ -19,20 +19,19 @@ const cdn = {
     js: []
   },
   // 生产环境
+  //vue3 要使用 mavon-editor@next 该版本未发布npm,暂时无法cdn。
   build: {
     css: [
-      'https://cdn.jsdelivr.net/npm/element-ui@2.15.1/lib/theme-chalk/index.css',
-      'https://cdn.jsdelivr.net/npm/element-ui@2.15.1/lib/theme-chalk/display.css',
-      'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/css/index.css'
+      'https://cdn.jsdelivr.net/npm/element-plus@2.3.4/dist/index.css',
+      // 'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/css/index.css'
     ],
     js: [
-      'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js',
-      'https://cdn.jsdelivr.net/npm/vue-router@3.2.0/dist/vue-router.min.js',
-      'https://cdn.jsdelivr.net/npm/vuex@3.4.0/dist/vuex.min.js',
-      'https://cdn.jsdelivr.net/npm/element-ui@2.15.1/lib/index.js',
+      'https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js',
+      'https://cdn.jsdelivr.net/npm/vue-router@4.1.6/dist/vue-router.global.js',
+      'https://cdn.jsdelivr.net/npm/vuex@4.1.0/dist/vuex.global.js',
+      'https://cdn.jsdelivr.net/npm/element-plus@2.3.4/dist/index.full.min.js',
       // 'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/mavon-editor.min.js',
       'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js'
-      // 'https://unpkg.com/element-ui/lib/index.js'
     ]
   }
 }
@@ -44,6 +43,7 @@ const VueConfig = {
   devServer: {
     host: '0.0.0.0',
     port: 9000,
+    //使用proxy生产时nginx记得使用反向代理！！
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -84,6 +84,9 @@ const VueConfig = {
   chainWebpack: (config) => {
     config.when(IS_PROD, (config) => {
       config.entry('app').clear().add('./src/main-prod.ts')
+      config.output.filename('js/[name].js')
+      config.output.chunkFilename('js/[name].js')
+
       /**
              * 添加CDN参数到htmlWebpackPlugin配置中
              */
@@ -92,16 +95,17 @@ const VueConfig = {
         args[0].title = 'Xanadu'
         return args
       })
-      // 压缩图片
-      config.module
-        .rule('images')
-        .use('image-webpack-loader')
-        .loader('image-webpack-loader')
-        .options({ bypassOnDebug: true })
-        .end()
+      // 压缩图片(目前引发了诸多bug，暂时拿掉吧)
+      // config.module
+      //   .rule('images')
+      //   .use('image-webpack-loader')
+      //   .loader('image-webpack-loader')
+      //   .options({ bypassOnDebug: true })
+      //   .end()
     })
     // 开发阶段
     config.when(process.env.NODE_ENV === 'development', config => {
+      //development时使用另一个入口文件！！！
       config.entry('app').clear().add('./src/main-dev.ts')
       config.plugin('html').tap(args => {
         args[0].cdn = cdn.dev
@@ -111,6 +115,7 @@ const VueConfig = {
     })
   },
   pluginOptions: {
+    //目的是注入全局的less变量
     'style-resources-loader': {
       preProcessor: 'less',
       patterns: [
