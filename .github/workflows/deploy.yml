@@ -1,0 +1,92 @@
+name: Build static files CI
+on:
+  push:
+    branches:
+      - 'deploy/vue2'
+jobs:
+  web-users-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install and Build
+        run: | 
+          npm ci
+          npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-users-artifact
+          path: web/dist
+          if-no-files-found: warn
+
+      # todo: upload to server
+      - name: Deploy Web Users
+        run: |
+          pwd
+          ls
+
+
+  web-admin-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: admin
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: npm
+          cache-dependency-path: admin/package-lock.json
+
+      - name: Install and Build
+        run: |
+          npm ci
+          npm run build:prod
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-admin-artifact
+          path: admin/dist
+          if-no-files-found: warn
+      # todo: upload to server
+      - name: Deploy Web Admin
+        run: |
+          pwd
+          ls
+
+  # todo: final upload ?
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: [web-users-build, web-admin-build]
+#    defaults:
+#      run:
+#        working-directory: deploy
+#    steps:
+#      - name: mkdir build
+#        run: |
+#          ls
+#      - name: Download artifacts
+#        uses: actions/download-artifact@v3
+#        with:
+#          # Artifact name
+#          name: web-admin-artifact
+#          path: admin
+#      - run: pwd && ls
