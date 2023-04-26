@@ -210,8 +210,8 @@ onBeforeRouteLeave((to, from, next) => {
     mainStore.commit("setHeaderLogo", {
       headerLogoShow: true,
     });
-    next();
   }
+   next();
 });
 </script>
 <style lang="less" scoped>

@@ -13,7 +13,7 @@
         <span class="is-null" v-else>暂无数据</span>
     </el-card>
 </template>
-<script lang="ts" setup name="">
+<script lang="ts" setup name="HotNews">
 import { onBeforeMount, ref } from 'vue'
 import { getHotNewsApi } from '@/apis/news'
 const hotNews = ref([])

@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve  --mode development",
     "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
-    "clear":"npx rimraf node_modules"
+    "clear": "npx rimraf node_modules"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
@@ -32,7 +32,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
-    "compression-webpack-plugin": "^10.0.0",
+    "compression-webpack-plugin": "^5.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",

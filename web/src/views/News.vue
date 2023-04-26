@@ -76,7 +76,7 @@
               background
               @current-change="handleCurrentChange"
               v-model:current-page="pageInfo.pagenum"
-              :page-size="pageInfo.pagesize"
+              v-model:page-size="pageInfo.pagesize"
               layout="prev, pager, next, jumper"
               :total="newsItems.total"
               :hide-on-single-page="singlePage"

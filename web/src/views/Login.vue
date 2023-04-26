@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 onMounted(() => {
-  const prodUrl = 'https://xanadu.aerowang.cn/admin/#/login'
+  const prodUrl = process.env.VUE_APP_PRODURL
   window.open(prodUrl, '_blank')
   router.push('/index')
 })

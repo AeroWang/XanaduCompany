@@ -30,7 +30,7 @@ export const getRecomNewsApi = () => {
  * @param path
  * @returns
  */
-export const getNewsDetailsApi = (path:string) => {
+export const getNewsDetailsApi = (path: unknown) => {
   return request.get('/v1/web/article/' + path)
 }
 
