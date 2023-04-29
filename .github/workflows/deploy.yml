@@ -20,17 +20,30 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
+      - name: Cache Node Dependencies
+        id: cache-npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
       - name: Install and Build
-        run: | 
+        run: |
           npm ci
           npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: web-users-artifact
-          path: web/dist
-          if-no-files-found: warn
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: web-users-artifact
+#          path: web/dist
+#          if-no-files-found: warn
+
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
@@ -59,17 +72,30 @@ jobs:
           cache: npm
           cache-dependency-path: admin/package-lock.json
 
+      - name: Cache Node Dependencies
+        id: cache-npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
       - name: Install and Build
         run: |
           npm ci
           npm run build:prod
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: web-admin-artifact
-          path: admin/dist
-          if-no-files-found: warn
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: web-admin-artifact
+#          path: admin/dist
+#          if-no-files-found: warn
+
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
