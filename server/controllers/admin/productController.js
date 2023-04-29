@@ -32,7 +32,7 @@ module.exports = {
     }
   },
   deleteProduct: async ctx => {
-    const deleteId = ctx.url.substring(22)
+    const deleteId = ctx.url.substring(19)
     const result = await ProductService.deleteProduct(deleteId)
     if (result === 1) {
       ctx.body = {
@@ -49,7 +49,7 @@ module.exports = {
     }
   },
   updateProduct: async ctx => {
-    const productId = ctx.url.substring(22)
+    const productId = ctx.url.substring(19)
     const tempObj = ctx.request.body
     const productObj = {
       product_title: tempObj.title,
@@ -105,7 +105,7 @@ module.exports = {
     }
   },
   getProductDetail: async ctx => {
-    const productId = ctx.url.substring(22)
+    const productId = ctx.url.substring(19)
     const result = await ProductService.getProductDetail(productId)
     if (result) {
       ctx.body = {

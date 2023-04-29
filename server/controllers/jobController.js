@@ -69,7 +69,7 @@ module.exports = {
     }
   },
   getJobDetail: async ctx => {
-    const jobId = ctx.url.substring(16)
+    const jobId = ctx.url.substring(13)
     const result = await JobService.getJobDetail(jobId)
     if (result) {
       const temp = result.dataValues

@@ -28,7 +28,7 @@ module.exports = {
     }
   },
   getRoleDetail: async ctx => {
-    const roleId = ctx.request.path.substring(20)
+    const roleId = ctx.request.path.substring(17)
     const result = await RolesService.getRoleDetail(roleId)
     if (result) {
       ctx.body = {
@@ -50,7 +50,7 @@ module.exports = {
     }
   },
   updateRole: async ctx => {
-    const roleId = ctx.request.path.substring(20)
+    const roleId = ctx.request.path.substring(17)
     const result = await RolesService.getRoleDetail(roleId)
     if (result.dataValues.id === '1') {
       ctx.body = {
@@ -88,7 +88,7 @@ module.exports = {
     
   },
   deleteRole: async ctx => {
-    const roleId = ctx.request.path.substring(20)
+    const roleId = ctx.request.path.substring(17)
     const result = await RolesService.getRoleDetail(roleId)
     if (result.dataValues.id === '1') {
       ctx.body = {
@@ -121,7 +121,7 @@ module.exports = {
     }
   },
   getRoleMenuList: async ctx => {
-    const roleId = ctx.url.substring(19)
+    const roleId = ctx.url.substring(16)
     const result = await RolesService.getRoleMenuList(roleId)
     if (result.length > 0) {
       ctx.body = {
@@ -141,7 +141,7 @@ module.exports = {
   },
 //  获取角色权限
   getRolePermission: async ctx => {
-    const roleName = ctx.url.substring(30)
+    const roleName = ctx.url.substring(27)
     const result = await RolesService.getRolePermission(roleName)
     if (result.length > 0) {
       ctx.body = {
@@ -179,7 +179,7 @@ module.exports = {
   },
 //  更新菜单权限
   updateRoleMenuList: async ctx => {
-    const roleId = ctx.request.path.substring(19)
+    const roleId = ctx.request.path.substring(16)
     const roleMenuIdList = ctx.request.body
     const roleMenuList = []
     for (let i = 0; i < roleMenuIdList.length; i++) {
@@ -206,7 +206,7 @@ module.exports = {
   },
 //  更新角色操作权限
   updateRolePermissionList:async ctx=>{
-    const roleId = ctx.request.path.substring(25)
+    const roleId = ctx.request.path.substring(22)
     const permissionIdList = ctx.request.body
     const rolePermissionList = []
     for (let i = 0; i < permissionIdList.length; i++) {

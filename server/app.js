@@ -18,7 +18,7 @@ const getUploadDirName = require('./utils/getUploadDirName')
 const routers = require('./routers/index')
 
 // 常量
-const Port = process.env.PORT || 3000
+const Port = process.env.PORT || 6688
 const staticPath = './static'
 
 // 实例对象
@@ -31,12 +31,13 @@ const logger = new Logger(str => {
   console.log(moment().format('YYYY-MM-DD HH:MM:SS') + str)
 })
 app.use(cors())
+// app.use(
 // cors({
 //   origin: function (ctx) { //设置允许来自指定域名请求
 //     if (ctx.url === '/test') {
 //       return '*' // 允许来自所有域名请求
 //     }
-//     return 'http://localhost:9528' //只允许http://localhost:8080这个域名的请求
+//     return 'https://xanadu.aerowang.cn/' //只允许http://localhost:8080这个域名的请求
 //   },
 //   maxAge: 5, //指定本次预检请求的有效期，单位为秒。
 //   credentials: true, //是否允许发送Cookie
@@ -44,6 +45,7 @@ app.use(cors())
 //   allowHeaders: ['Content-Type', 'Authorization', 'Accept'], //设置服务器支持的所有头信息字段
 //   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'] //设置获取其他自定义字段
 // })
+// )
 
 // 中间件挂载
 // app.use(bodyParser())
@@ -89,9 +91,9 @@ app.use(koa_jwt({
   secret: 'Aerowang'
 }).unless({
   path: [
-    /^\/api\/v1\/web/,
-    /^\/api\/v1\/admin\/login/,
-    /^\/api\/v1\/admin\/register/,
+    /^\/api\/web/,
+    /^\/api\/admin\/login/,
+    /^\/api\/admin\/register/,
     /^\/static\/upload/
   ] //除了这个地址，其他的URL都需要验证
 }))

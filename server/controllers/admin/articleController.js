@@ -24,7 +24,7 @@ module.exports = {
   },
   // 获取新闻详情
   getArticleDetail: async ctx => {
-    const articlePath = ctx.request.path.substring(22)
+    const articlePath = ctx.request.path.substring(19)
     const result = await NewsService.getArticleDetail(articlePath)
     if (result) {
       result.dataValues.category = result.dataValues.aw_news_type.dataValues.type_name
@@ -94,7 +94,7 @@ module.exports = {
   },
   // 更新新闻
   updateArticle: async ctx => {
-    const editPath = ctx.request.path.substring(22)
+    const editPath = ctx.request.path.substring(19)
     const articleObj = ctx.request.body
     // 获取对象的key，输出数组
     if (articleObj) {
@@ -140,7 +140,7 @@ module.exports = {
     }
   },
   deleteArticle: async ctx => {
-    const deletePath = ctx.request.path.substring(22)
+    const deletePath = ctx.request.path.substring(19)
     await NewsService.deleteArticle(deletePath)
     ctx.body = {
       status: 200,

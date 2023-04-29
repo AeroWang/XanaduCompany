@@ -108,7 +108,7 @@ module.exports = {
   newsDetail: async (ctx) => {
     // console.log(ctx.request.path)
     // 截取出文章详情ID
-    const articleId = ctx.request.path.substring(20)
+    const articleId = ctx.request.path.substring(17)
     const result = await NewsService.getNewsDetail(articleId)
     if (result) {
       ctx.body = {

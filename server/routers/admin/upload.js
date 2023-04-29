@@ -37,7 +37,9 @@ const routers = router
   //
   .post('/file', async (ctx) => {
     if (ctx.request.files) {
-      const fileUrl = `${ctx.origin}/upload/${ctx.uploadpath.file}`
+    //   const fileUrl = `${ctx.origin}/server/static/upload/${ctx.uploadpath.file}`
+          // todo 根据实际部署情况拼接路径
+      const fileUrl = `https://xanadu.aerowang.cn/server/static/upload/${ctx.uploadpath.file}`
       console.log(fileUrl)
       ctx.body = {
         status: 200,

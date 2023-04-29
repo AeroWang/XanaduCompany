@@ -64,7 +64,7 @@ module.exports = {
     }
   },
   deleteJob: async ctx => {
-    const deleteId = ctx.url.substring(18)
+    const deleteId = ctx.url.substring(15)
     const result = await JobService.deleteJob(deleteId)
     if (result === 1) {
       ctx.body = {
@@ -81,7 +81,7 @@ module.exports = {
     }
   },
   updateJob: async ctx => {
-    const jobId = ctx.url.substring(18)
+    const jobId = ctx.url.substring(15)
     const jobObj = ctx.request.body
     const result = await JobService.updateJob(jobId, jobObj)
     if (result[0]===1){
@@ -126,7 +126,7 @@ module.exports = {
     }
   },
   getJobDetail: async ctx => {
-    const jobId = ctx.url.substring(18)
+    const jobId = ctx.url.substring(15)
     const result = await JobService.getJobDetail(jobId)
     if (result) {
       ctx.body = {

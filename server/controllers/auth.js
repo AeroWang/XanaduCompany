@@ -133,7 +133,7 @@ module.exports = {
   },
   // 更新
   updateAccount: async (ctx) => {
-    const accountId = ctx.url.substring(22)
+    const accountId = ctx.url.substring(19)
     const data = ctx.request.body
     console.log(data)
     const count = await AccountService.getAccountById(accountId)
@@ -185,7 +185,7 @@ module.exports = {
   },
   // 删除
   deleteAccount: async (ctx) => {
-    const accountId = ctx.url.substring(22)
+    const accountId = ctx.url.substring(19)
     const count = await AccountService.getAccountById(accountId)
     let token = ctx.request.headers['authorization']
     const tokenInfo = await varifyToken(token)
@@ -247,7 +247,7 @@ module.exports = {
   
   // 获取用户信息
   getAccountInfoById: async (ctx) => {
-    const accountId = ctx.url.substring(19)
+    const accountId = ctx.url.substring(16)
     const count = await AccountService.getAccountById(accountId)
     const userInfo = count[0].dataValues
     const date = count[0].dataValues.createdAt

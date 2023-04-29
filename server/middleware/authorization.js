@@ -9,10 +9,10 @@ module.exports = function () {
   return async (ctx, next) => {
     const url = ctx.path
     // 对前端展示、登录、注册等路由进行放行
-    if (url.substring(0, 11) === '/api/v1/web'
-      || url === '/api/v1/admin/login'
-      || url === '/api/v1/admin/register'
-      || url === '/api/v1/admin/logout') {
+    if (url.substring(0, 8) === '/api/web'
+      || url === '/api/admin/login'
+      || url === '/api/admin/register'
+      || url === '/api/admin/logout') {
       await next()
     } else {
       // 判断headers 中是否存在 authorization
@@ -38,7 +38,7 @@ module.exports = function () {
           for (let i = 0; i < result.length; i++) {
             const tmp = {
               // 拼接api路径
-              path: '/api/v1/admin' + result[i].path,
+              path: '/api/admin' + result[i].path,
               method: result[i].method
             }
             permissionApi.push(tmp)

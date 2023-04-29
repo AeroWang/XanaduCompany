@@ -1,9 +1,9 @@
 const config = {
-    database: "xanadu_db", // 数据库名称
+    database: "xanadu", // 数据库名称
     username: "root", // 用户名
-    password: "aerowang", // 密码
-    host: "localhost", // 主机地址
-    port: "3308", // 端口号
+    password: "hcfWJWeNm7zmCkz7", // 密码
+    host: "mysqldb", // 主机地址
+    port: "3306", // 端口号
     dialect: "mysql", //数据库类型，支持: 'mysql', 'sqlite', 'postgres', 'mssql'
     // logging: true, // 是否启用日志
 }

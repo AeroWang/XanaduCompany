@@ -5,7 +5,7 @@
       <li class = "hot-list-item" v-for = "(item,index) in hotNews" :key = "index">
         <span class = "num-top">{{ index + 1 }}</span>
         <p>
-          <router-link :to = "`/news/${item.news_path}`">{{ item.news_title }}</router-link>
+          <router-link :to = "`/news/${item.news_path}`" target="_blank">{{ item.news_title }}</router-link>
           <span class = "hot-date">{{ item.publish_time }}</span>
         </p>
       </li>
