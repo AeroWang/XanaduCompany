@@ -1,4 +1,4 @@
-name: Build static files CI
+name: Build and Deploy
 on:
   push:
     branches:
