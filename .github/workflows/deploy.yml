@@ -24,7 +24,7 @@ jobs:
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
@@ -76,7 +76,7 @@ jobs:
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
