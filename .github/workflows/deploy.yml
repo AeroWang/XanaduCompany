@@ -36,7 +36,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-avzr --delete"
-          SOURCE: "dist/"
+          SOURCE: "web/dist/"
           REMOTE_HOST: ${{ secrets.SERVER_IP }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           REMOTE_USER: ${{ secrets.SERVER_USER }}
@@ -75,7 +75,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-avzr --delete"
-          SOURCE: "dist/"
+          SOURCE: "admin/dist/"
           REMOTE_HOST: ${{ secrets.SERVER_IP }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           REMOTE_USER: ${{ secrets.SERVER_USER }}
