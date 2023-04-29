@@ -2,6 +2,10 @@ const Router = require('koa-router')
 const router = new Router()
 const fs = require('fs')
 const path = require('path')
+const {isValidImage}=require('../../utils/utils')
+
+const config =require("../../config/qiniu_my");
+const {uploadFile} = require("../../utils/manageImageWithQiniu");
 // const Koa = require('koa')
 // const koaBody = require('koa-body')
 // const path = require('path')
@@ -37,14 +41,21 @@ const routers = router
   //
   .post('/file', async (ctx) => {
     if (ctx.request.files) {
-      const fileUrl = `${ctx.origin}/upload/${ctx.uploadpath.file}`
-      console.log(fileUrl)
-      ctx.body = {
-        status: 200,
-        data: {
-          fileUrl
-        },
-        msg: 'ok'
+      let fileUrl = `${ctx.origin}/upload/${ctx.uploadpath.file}`
+      //在这判断是否要将图片存为七牛
+        // console.log(ctx.request.files)
+        // console.log("文件===>",fileUrl);
+      if(config.enable){
+        const reader =fs.createReadStream(path.resolve(__dirname,"../../static/upload/"+ctx.uploadpath.file));
+        fileUrl=await uploadFile(reader,ctx.uploadpath.file)
+        console.log('fileUrl===>',fileUrl)
+      }
+        ctx.body = {
+          status: 200,
+          data: {
+            fileUrl
+          },
+          msg: 'ok'
       }
     } else {
       ctx.body = {

@@ -26,6 +26,7 @@
     "koa2-cors": "^2.0.6",
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
+    "qiniu": "^7.8.0",
     "sequelize": "^6.6.2",
     "sequelize-auto": "^0.8.2"
   },

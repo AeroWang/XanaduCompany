@@ -60,9 +60,19 @@ const verifyPwd = (password, hash) => {
   })
 }
 
+/**
+ * 验证扩展名是否是合法的图片扩展名
+ * @param {string} ext
+ */
+const isValidImage=(ext)=>{
+  const extList=['png','jpeg','jpg','webp','gif'];
+  return extList.includes(ext);
+}
+
 module.exports = {
   verifyPwd,
   encrypted,
   varifyToken,
   createToken,
+  isValidImage
 }
