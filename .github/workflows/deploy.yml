@@ -12,38 +12,36 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Use Node.js 14.x
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
           cache: npm
           cache-dependency-path: web/package-lock.json
-
+      - name: Get npm cache directory
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache Node Dependencies
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ${{ steps.npm-cache.outputs.dir }}
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
-
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
+        name: List the state of node modules & Install
         continue-on-error: true
-        run: npm list
-
-      - name: Install and Build
-        run: |
+        run: | 
+          npm list
           npm ci
-          npm run build
-
+      - name: Build
+        run: npm run build
 #      - name: Upload artifact
 #        uses: actions/upload-artifact@v3
 #        with:
 #          name: web-users-artifact
 #          path: web/dist
 #          if-no-files-found: warn
-
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
@@ -55,7 +53,6 @@ jobs:
           REMOTE_USER: ${{ secrets.SERVER_USER }}
           TARGET: ${{ secrets.SERVER_TARGET_USERS }}
 
-
   web-admin-build:
     runs-on: ubuntu-latest
     defaults:
@@ -64,30 +61,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Use Node.js 14.x
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
           cache: npm
           cache-dependency-path: admin/package-lock.json
-
+      - name: Get npm cache directory
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache Node Dependencies
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ${{ steps.npm-cache.outputs.dir }}
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
-
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
+        name: List the state of node modules & Install
         continue-on-error: true
-        run: npm list
-
-      - name: Install and Build
         run: |
+          npm list
           npm ci
-          npm run build:prod
+      - name: Build
+        run: npm run build
 
 #      - name: Upload artifact
 #        uses: actions/upload-artifact@v3
