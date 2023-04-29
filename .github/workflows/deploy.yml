@@ -20,20 +20,20 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - name: Get npm cache directory
         id: npm-cache
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
+        run: echo "cacheDir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - run: echo "${{ env.cacheDir }}"
       - name: Cache Node Dependencies
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
+          path: ${{ steps.npm-cache.outputs.cacheDir }}
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules & Install
+        name: List the state of node modules
         continue-on-error: true
-        run: | 
-          npm list
-          npm ci
+        run: npm list
+      - name: Install Dependencies
+        run: npm ci
       - name: Build
         run: npm run build
 #      - name: Upload artifact
@@ -69,8 +69,8 @@ jobs:
           cache-dependency-path: admin/package-lock.json
       - name: Get npm cache directory
         id: npm-cache
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
+        run: echo "cacheDir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - run: echo "${{ env.cacheDir }}"
       - name: Cache Node Dependencies
         id: cache-npm
         uses: actions/cache@v2
@@ -78,11 +78,11 @@ jobs:
           path: ${{ steps.npm-cache.outputs.dir }}
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules & Install
+        name: List the state of node modules
         continue-on-error: true
-        run: |
-          npm list
-          npm ci
+        run: npm list
+      - name: Install Dependencies
+        run: npm ci
       - name: Build
         run: npm run build
 
