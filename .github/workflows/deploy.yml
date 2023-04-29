@@ -18,15 +18,11 @@ jobs:
           node-version: 14.x
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - name: Get npm cache directory
-        id: npm-cache
-        run: echo "cacheDir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
-      - run: echo "${{ env.cacheDir }}"
       - name: Cache Node Dependencies
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: ${{ steps.npm-cache.outputs.cacheDir }}
+          path: ~/.npm
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: List the state of node modules
@@ -67,15 +63,11 @@ jobs:
           node-version: 14.x
           cache: npm
           cache-dependency-path: admin/package-lock.json
-      - name: Get npm cache directory
-        id: npm-cache
-        run: echo "cacheDir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
-      - run: echo "${{ env.cacheDir }}"
       - name: Cache Node Dependencies
         id: cache-npm
         uses: actions/cache@v2
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
+          path: ~/.npm
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: List the state of node modules
