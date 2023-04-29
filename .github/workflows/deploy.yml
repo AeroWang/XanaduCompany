@@ -76,7 +76,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run build:prod
 
 #      - name: Upload artifact
 #        uses: actions/upload-artifact@v3
