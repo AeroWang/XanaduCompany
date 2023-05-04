@@ -37,7 +37,7 @@ const cdn = {
 }
 
 module.exports = {
-  publicPath: '/',
+  publicPath: './',
   devServer: {
     proxy: {
       '/api': {
