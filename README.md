@@ -114,8 +114,26 @@ npm i pm2 -g
 
 10.新手请注意辨明前端打包的目的，当前我们写的代码是浏览器不能直接运行的，我们需要将我们的代码转为浏览器可识别并执行的格式，本质上是js到另一种j s规范的过程，和后端意义的打包完全不同。
 
+11.图片路径问题请尽量使用自己的cdn服务或者把资源放在自己的服务器上，替换数据库已经存在的图片路径，你可以使用
+如下的sql语句：
+```mysql
+UPDATE [tablename] SET [fieldname] = REPLACE([fieldname], 'locolhost:3000','[yourHOST]')
+```
+图片资源不太需要nginx反向代理，你可以参考如下的配置:
+```nginx
+location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|webp|jfif)$
+    {
+        #图片在server/static里，改写root路径就可以了！
+        root /www/wwwroot/zero/company/server/static;
+        expires      30d;
+        error_log /dev/null;
+        access_log /dev/null;
+    }
+```
+
 ## 七、最后的最后
 
 记得给star哦ღ( ´･ᴗ･` )~
 
-QQ群：434063310。
+QQ群：743455904(人数快满了)，
+新群：434063310。
