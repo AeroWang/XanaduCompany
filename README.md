@@ -92,7 +92,7 @@ npm i yarn -g
 
 4.项目运行前，请一定要npm install安装相关的依赖。
 
-5.数据库脚本请参考QQ群：743455904。
+5.数据库脚本请参考QQ群：434063310。
 
 6.node推荐使用nvm版本管理工具，[windows用户](https://github.com/coreybutler/nvm-windows/releases)直接使用.exe无烦恼安装, mac用户可以使用brew安装
 ```bash
