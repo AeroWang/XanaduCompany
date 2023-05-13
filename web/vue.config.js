@@ -1,7 +1,8 @@
 const path = require('path')
 const config = require('process').config
 const IS_PROD = process.env.NODE_ENV === 'production'
-const CompressionPlugin = require('compression-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin');
+const USE_CDN=false //这个开关用来控制CDN
 // 优化打包
 // externals
 const externals = {
@@ -46,10 +47,10 @@ const VueConfig = {
     //使用proxy生产时nginx记得使用反向代理！！
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: IS_PROD ? 'https://company.zerotower.cn' : 'http://localhost:3000',
         // ws: true,
         changeOrigin: true
-        // pathRewrite: {
+        // pathRewrite: {//路径重写
         //   '^/api': '/api/private/v1/'
         // }
       }
@@ -77,12 +78,15 @@ const VueConfig = {
           minRatio: 0.8 // 压缩比
         })
       )
-      config.externals = externals
+      if (USE_CDN) {
+        config.externals = externals
+      }
     }
     return { plugins }
   },
   chainWebpack: (config) => {
     config.when(IS_PROD, (config) => {
+      //生产环境时使用生产环境的入口文件，清空原来的，再添加新的入口文件
       config.entry('app').clear().add('./src/main-prod.ts')
       config.output.filename('js/[name].js')
       config.output.chunkFilename('js/[name].js')
@@ -91,7 +95,9 @@ const VueConfig = {
              * 添加CDN参数到htmlWebpackPlugin配置中
              */
       config.plugin('html').tap((args) => {
-        args[0].cdn = cdn.build
+        if (USE_CDN) {
+          args[0].cdn = cdn.build
+        }
         args[0].title = 'Xanadu'
         return args
       })
@@ -105,7 +111,7 @@ const VueConfig = {
     })
     // 开发阶段
     config.when(process.env.NODE_ENV === 'development', config => {
-      //development时使用另一个入口文件！！！
+      //development时使用自己的入口文件
       config.entry('app').clear().add('./src/main-dev.ts')
       config.plugin('html').tap(args => {
         args[0].cdn = cdn.dev

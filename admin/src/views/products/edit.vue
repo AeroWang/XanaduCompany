@@ -88,7 +88,7 @@
 <script>
 import { getProductDetail, updateProduct } from '@/api/product'
 import { uploadFile } from '@/api/file'
-
+import {setDefaultFile} from "@/utils/file"
 export default {
   name: 'CreateArticle',
   data() {
@@ -256,6 +256,10 @@ export default {
             bgImg: data.cover_img,
             logo: data.product_logo
           }
+          this.$nextTick(()=>{
+            setDefaultFile(this.$refs.uploadImg,data.cover_img);
+            setDefaultFile(this.$refs.uploadLogo,data.product_logo);
+          })
         } else {
           this.$message.error(res.msg)
         }

@@ -4,6 +4,7 @@ const KStatic = require('koa-static') // 静态资源中间件
 const Logger = require('koa-logger') // 日志中间件
 const path = require('path')
 const moment = require('moment') // 时间格式化插件
+const consola = require('consola') //格式化打印插件
 // const bodyParser = require('koa-bodyparser') // post请求中间件
 const cors = require('koa2-cors')
 const koa_jwt = require('koa-jwt')
@@ -111,5 +112,5 @@ app.on('error', err => {
 })
 // 端口
 app.listen(Port, () => {
-  console.log(`Server running at Port:${Port}`)
+  consola.success(`Server running at Port:${Port}`)
 })

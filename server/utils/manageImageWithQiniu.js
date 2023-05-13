@@ -70,7 +70,7 @@ const deleteOriginFile=async (filename)=>{
         qiniuConfig.useCdnDomain=config.useCdnDomains;
         const formUploader = new Qiniu.form_up.FormUploader(qiniuConfig);
         const putExtra = new Qiniu.form_up.PutExtra();
-        const filepath= !config.rootPath? "/"+filename : `/${config.rootPath}/${filename}`
+        const filepath= !config.rootPath? "/"+filename : `${config.rootPath}/${filename}`
         formUploader.putStream(getToken(),filepath,localFile,putExtra,(e, respBody, respInfo)=>{
             if(e){
                 console.log("qiniu错误===>",e)
