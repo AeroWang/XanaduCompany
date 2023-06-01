@@ -134,6 +134,4 @@ location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|webp|jfif)$
 ## 七、最后的最后
 
 记得给star哦ღ( ´･ᴗ･` )~
-
-QQ群：743455904(人数快满了)，
 新群：434063310。
