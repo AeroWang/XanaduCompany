@@ -1,3 +1,5 @@
+> ## 参考主分支的 [README.md](https://github.com/AeroWang/XanaduCompany/blob/vue3/README.md)
+
 ## 一、采用技术方案
 
 该系统采用的主要技术如下：
@@ -42,6 +44,8 @@ server---后端服务
      也可以在进行注册
 
 ## 五、如何本地运行
+
+> 数据库文件见QQ群 434063310 文件
 
 1. 先启动后端(server目录下)
 ```bash
