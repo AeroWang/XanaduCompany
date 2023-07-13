@@ -56,7 +56,7 @@ npm install
 
 npm run start(本地启动)
 
-或者 npm run dev(实时监听改动重启，边改边跑)
+或者 npm run dev(实时监听改动重启，边改边跑) 需要全局安装 nodemon（任何说不是xxx命令的错误都是没有全局安装，请先安装后再运行）
 ```
 2. 启动前端（web 或者 admin目录下）
 ```bash
@@ -134,6 +134,4 @@ location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|webp|jfif)$
 ## 七、最后的最后
 
 记得给star哦ღ( ´･ᴗ･` )~
-
-QQ群：743455904(人数快满了)，
 新群：434063310。
