@@ -15,8 +15,11 @@ import request from '@/utils/request'
 export const getJobListApi = (data:any) =>
   request.post('/v1/web/job', data)
 
-  /**
-   * 职位过滤
-   * @returns 
+/**
+ * * 职位过滤
+   * @returns
    */
-  export const getJobFilter=()=> request.get('/v1/web/job-filters')
+export const getJobFilter = () => request.get('/v1/web/job-filters')
+
+export const getJobDetailApi = (id:string) =>
+  request.get('/v1/web/job/' + id)

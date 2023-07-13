@@ -27,7 +27,7 @@
             </el-icon>
           </template>
           <template #default="{ item }">
-            <router-link :to="item.news_path" target="_blank">
+            <router-link :to="'/news/'+item.news_path" target="_blank">
               <div class="name" v-html="item.news_title"></div>
               <span class="desc" v-html="item.news_desc"></span>
             </router-link>
@@ -110,98 +110,98 @@
   </div>
 </template>
 <script lang="ts" setup>
-import AwHeader from "@/components/public/Header.vue";
-import AwFooter from "@/components/public/Footer.vue";
-import HotNews from "@/components/HotNews.vue";
-import NewsList from "@/components/NewsList.vue";
-import { Search } from "@element-plus/icons-vue";
-import { onBeforeMount, onMounted, ref } from "vue";
-import mainStore from "@/store";
-import { onBeforeRouteLeave } from "vue-router";
-import { searchNewsList, getNewsList, getRecomNewsApi } from "@/apis/news";
+import AwHeader from '@/components/public/Header.vue'
+import AwFooter from '@/components/public/Footer.vue'
+import HotNews from '@/components/HotNews.vue'
+import NewsList from '@/components/NewsList.vue'
+import { Search } from '@element-plus/icons-vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
+import mainStore from '@/store'
+import { onBeforeRouteLeave } from 'vue-router'
+import { searchNewsList, getNewsList, getRecomNewsApi } from '@/apis/news'
 type NewsItem = {
   id: string;
   name: string;
 };
-const headRef = ref();
-const newsTabs = ref<NewsItem[]>([]);
-const newsItems = ref<Record<any, any>>({});
+const headRef = ref()
+const newsTabs = ref<NewsItem[]>([])
+const newsItems = ref<Record<any, any>>({})
 const pageInfo = ref<{
   activeName: string;
   pagenum: number;
   pagesize: number;
-  selectDate: "";
+  selectDate: '';
 }>({
-  activeName: "1",
+  activeName: '1',
   // 当前页码
   pagenum: 1,
   // 当前每页显示多少条数据
   pagesize: 10,
-  selectDate: "",
-});
-const singlePage = ref(false);
-const recomNews = ref<Array<any>>([]);
-const selectDate = ref("");
-const searchList = ref<Array<any>>([]);
-const timeout = ref();
-const autocomplete = ref();
-const autocompleteFlag = ref(false);
-const hotNews = ref<Array<any>>([]);
-const searchNews = ref<any>();
+  selectDate: ''
+})
+const singlePage = ref(false)
+const recomNews = ref<Array<any>>([])
+const selectDate = ref('')
+const searchList = ref<Array<any>>([])
+const timeout = ref()
+const autocomplete = ref()
+const autocompleteFlag = ref(false)
+const hotNews = ref<Array<any>>([])
+const searchNews = ref<any>()
 onBeforeMount(() => {
   newsTabs.value = [
     {
-      id: "1",
-      name: "最新动态",
+      id: '1',
+      name: '最新动态'
     },
     {
-      id: "2",
-      name: "典型案例",
+      id: '2',
+      name: '典型案例'
     },
     {
-      id: "3",
-      name: "通知公告",
-    },
-  ];
-  getNewsItems();
-  getRecomNews();
-});
+      id: '3',
+      name: '通知公告'
+    }
+  ]
+  getNewsItems()
+  getRecomNews()
+})
 onMounted(() => {
-  mainStore.commit("setHeaderLogo", {
-    headerLogoShow: false,
-  });
-  mainStore.commit("setShadowActive", {
-    headerShadowActive: false,
-  });
-  mainStore.commit("setNavDarkActive", {
-    navDarkActive: true,
-  });
-  mainStore.commit("setHeaderShow", {
-    headerShow: false,
-  });
-});
+  mainStore.commit('setHeaderLogo', {
+    headerLogoShow: false
+  })
+  mainStore.commit('setShadowActive', {
+    headerShadowActive: false
+  })
+  mainStore.commit('setNavDarkActive', {
+    navDarkActive: true
+  })
+  mainStore.commit('setHeaderShow', {
+    headerShow: false
+  })
+})
 
-async function querySearchAsync(queryString: string, cb: (list: Array<any>) => void) {
-  searchList.value = [];
-  const { data: res } = await searchNewsList(queryString);
-  searchList.value = res?.data?.list ?? [];
-  const newHtml = `<span style="color: #3370ff">${queryString}</span>`;
+async function querySearchAsync (queryString: string, cb: (list: Array<any>) => void) {
+  searchList.value = []
+  const { data: res } = await searchNewsList(queryString)
+  searchList.value = res?.data?.list ?? []
+  const newHtml = `<span style="color: #3370ff">${queryString}</span>`
   searchList.value.forEach((item) => {
-    item.news_title = item.news_title.replace(queryString, newHtml);
-    item.news_desc = item.news_desc.replace(queryString, newHtml);
+    item.news_title = item.news_title.replace(queryString, newHtml)
+    item.news_desc = item.news_desc.replace(queryString, newHtml)
     // item.news_desc = item.news_desc.replace(queryString, newHtml)
-  });
-  clearTimeout(timeout.value);
+  })
+  clearTimeout(timeout.value)
   timeout.value = setTimeout(() => {
-    cb(searchList.value);
-  }, 1000 * Math.random());
+    cb(searchList.value)
+  }, 1000 * Math.random())
 }
 /**
  * 解决 clearable 搜索框后再次输入不显示下拉
  */
-function searchHandle() {
+function searchHandle () {
   if (autocompleteFlag.value) {
-    autocomplete.value.activated = true;
+    autocomplete.value.activated = true
   }
 }
 
@@ -210,54 +210,54 @@ function searchHandle() {
  * @param tab
  * @param event
  */
-function handleClick(tab: number | string, event: Event) {
-  getNewsItems();
+function handleClick (tab: number | string, event: Event) {
+  getNewsItems()
 }
 
 /**
  * 新闻列表页切换
  * @param val
  */
-function handleCurrentChange(val: number) {
-  getNewsItems();
+function handleCurrentChange (val: number) {
+  getNewsItems()
 }
 
-async function getNewsItems() {
-  const { data: res } = await getNewsList(pageInfo.value);
+async function getNewsItems () {
+  const { data: res } = await getNewsList(pageInfo.value)
   if (res.status !== 200) {
-    newsItems.value = {};
+    newsItems.value = {}
   } else {
-    newsItems.value = res.data;
+    newsItems.value = res.data
     if (newsItems.value.total <= newsItems.value.limit) {
-      singlePage.value = true;
+      singlePage.value = true
     }
   }
 }
 
-function searchByDate(data: any) {
-  getNewsItems();
+function searchByDate (data: any) {
+  getNewsItems()
 }
 
-async function getRecomNews() {
-  const { data: res } = await getRecomNewsApi();
+async function getRecomNews () {
+  const { data: res } = await getRecomNewsApi()
   if (res.status !== 200) {
-    hotNews.value = [];
+    hotNews.value = []
   } else {
-    recomNews.value = res.data.list;
+    recomNews.value = res.data.list
   }
 }
 
 onBeforeRouteLeave((to, from, next) => {
-  if (from.name === "News") {
-    mainStore.commit("setNavDarkActive", {
-      navDarkActive: false,
-    });
-    mainStore.commit("setHeaderLogo", {
-      headerLogoShow: false,
-    });
+  if (from.name === 'News') {
+    mainStore.commit('setNavDarkActive', {
+      navDarkActive: false
+    })
+    mainStore.commit('setHeaderLogo', {
+      headerLogoShow: false
+    })
   }
-  next();
-});
+  next()
+})
 </script>
 <style lang="less" scoped>
 @hover_color: #3370ff;

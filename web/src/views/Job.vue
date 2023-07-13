@@ -65,47 +65,43 @@
   </div>
 </template>
 <script lang="ts" setup>
-import AwHeader from "@/components/public/Header.vue";
-import AwFooter from "@/components/public/Footer.vue";
-import CheckboxAndDropdown from "@/components/CheckboxAndDropdown.vue";
+import AwHeader from '@/components/public/Header.vue'
+import AwFooter from '@/components/public/Footer.vue'
+import CheckboxAndDropdown from '@/components/CheckboxAndDropdown.vue'
 
-import mainStore from "@/store";
-import { onBeforeRouteLeave } from "vue-router";
-import { computed, onBeforeMount, onMounted, onUnmounted, ref, reactive } from "vue";
-import { getJobListApi, getJobFilter } from "@/apis/job";
-import { Search } from "@element-plus/icons-vue";
+import mainStore from '@/store'
+import { onBeforeRouteLeave } from 'vue-router'
+import { computed, onBeforeMount, onMounted, onUnmounted, ref, reactive } from 'vue'
+import { getJobListApi, getJobFilter } from '@/apis/job'
+import { Search } from '@element-plus/icons-vue'
 
-const jobCategories = ref([]);
+const jobCategories = ref([])
 const jobCategoryProps = ref({
-  children: "children",
-  label: "name",
-});
-const jobCities = ref([]);
-const job_category_id_list = ref([]);
-const location_code_list = ref([]);
-const searchBarFixedTop = ref(false);
-const searchKeyword = ref("");
-const currentPage = ref(1);
-const pageSize = ref(10);
-const cityList = ref([]);
-const cities = ref([]);
-const results = ref<{
-  total: number;
-  job_post_list: any[];
-  limit: number;
-}>({
+  children: 'children',
+  label: 'name'
+})
+const jobCities = ref([])
+const job_category_id_list = ref([])
+const location_code_list = ref([])
+const searchBarFixedTop = ref(false)
+const searchKeyword = ref('')
+const currentPage = ref(1)
+const pageSize = ref(10)
+const cityList = ref([])
+const cities = ref([])
+const results = ref<Record<string, unknown>>({
   total: 0,
   job_post_list: [],
-  limit: 0,
-});
-const loading = ref(false);
+  limit: 0
+})
+const loading = ref(false)
 const locationCodeProps = ref({
-  label: "name",
-});
-const singlePage = ref(false);
-const checked = ref(false);
-const scrollTop = ref(0);
-const oldScrollTop = ref(0);
+  label: 'name'
+})
+const singlePage = ref(false)
+const checked = ref(false)
+const scrollTop = ref(0)
+const oldScrollTop = ref(0)
 
 const queryFilter = computed(() => {
   return {
@@ -113,106 +109,106 @@ const queryFilter = computed(() => {
     location_code_list: location_code_list.value,
     keyword: searchKeyword.value,
     pagesize: pageSize.value,
-    currentPage: currentPage.value,
-  };
-});
+    currentPage: currentPage.value
+  }
+})
 const clearable = computed(
   () => job_category_id_list.value.length !== 0 || location_code_list.value.length != 0
-);
+)
 
 onBeforeMount(() => {
-  getJobConfigRequest();
-  getJobList();
-});
+  getJobConfigRequest()
+  getJobList()
+})
 
 onMounted(() => {
-  mainStore.commit("setHeaderLogo", {
-    headerLogoShow: false,
-  });
-  mainStore.commit("setShadowActive", {
-    headerShadowActive: false,
-  });
-  mainStore.commit("setNavDarkActive", {
-    navDarkActive: true,
-  });
-  mainStore.commit("setHeaderShow", {
-    headerShow: false,
-  });
-  window.addEventListener("scroll", scrollHandle);
-});
+  mainStore.commit('setHeaderLogo', {
+    headerLogoShow: false
+  })
+  mainStore.commit('setShadowActive', {
+    headerShadowActive: false
+  })
+  mainStore.commit('setNavDarkActive', {
+    navDarkActive: true
+  })
+  mainStore.commit('setHeaderShow', {
+    headerShow: false
+  })
+  window.addEventListener('scroll', scrollHandle)
+})
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", scrollHandle);
-});
+  window.removeEventListener('scroll', scrollHandle)
+})
 
-function scrollHandle() {
+function scrollHandle () {
   scrollTop.value =
-    document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-  oldScrollTop.value = scrollTop.value;
+    document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+  oldScrollTop.value = scrollTop.value
   if (scrollTop.value >= 350) {
-    mainStore.commit("setHeaderShow", {
-      headerShow: true,
-    });
+    mainStore.commit('setHeaderShow', {
+      headerShow: true
+    })
   } else {
-    mainStore.commit("setHeaderShow", {
-      headerShow: false,
-    });
+    mainStore.commit('setHeaderShow', {
+      headerShow: false
+    })
   }
-  searchBarFixedTop.value = scrollTop.value >= 430;
+  searchBarFixedTop.value = scrollTop.value >= 430
 }
 
-function search() {
-  getJobList();
+function search () {
+  getJobList()
 }
 
-function clearFilter() { }
+function clearFilter () { }
 
 // 请求职位列表
-async function getJobList() {
-  loading.value = true;
+async function getJobList () {
+  loading.value = true
   const { data: res } = await getJobListApi({
     currentPage: currentPage.value,
     job_category_id_list: job_category_id_list.value,
     pageSize: pageSize.value,
     keyword: searchKeyword.value,
-    location_code_list: location_code_list.value,
-  });
+    location_code_list: location_code_list.value
+  })
   if (res.status === 200) {
-    results.value = res.data;
-    loading.value = false;
-    if (results.value.total <= results.value.limit) {
-      singlePage.value = true;
+    results.value = res.data
+    loading.value = false
+    if ((results.value.total as number) <= (results.value.limit as number)) {
+      singlePage.value = true
     }
   }
 }
 
 // 请求筛选条件
-async function getJobConfigRequest() {
-  const { data: res } = await getJobFilter();
+async function getJobConfigRequest () {
+  const { data: res } = await getJobFilter()
   if (res.status === 200) {
-    jobCities.value = res.data.city_list;
-    jobCategories.value = res.data.job_type_list;
+    jobCities.value = res.data.city_list
+    jobCategories.value = res.data.job_type_list
   }
 }
 
-function jobCategoryChange() { }
+function jobCategoryChange () { }
 
-function cityChange(value: any) {
-  location_code_list.value = value;
-  getJobList();
+function cityChange (value: any) {
+  location_code_list.value = value
+  getJobList()
 }
 
 onBeforeRouteLeave((to, from, next) => {
-  if (from.name === "Product") {
-    mainStore.commit("setNavDarkActive", {
-      navDarkActive: false,
-    });
-    mainStore.commit("setHeaderLogo", {
-      headerLogoShow: true,
-    });
+  if (from.name === 'Product') {
+    mainStore.commit('setNavDarkActive', {
+      navDarkActive: false
+    })
+    mainStore.commit('setHeaderLogo', {
+      headerLogoShow: true
+    })
   }
-   next();
-});
+  next()
+})
 </script>
 <style lang="less" scoped>
 .job_header {

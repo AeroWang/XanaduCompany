@@ -1,8 +1,8 @@
 const path = require('path')
 const config = require('process').config
 const IS_PROD = process.env.NODE_ENV === 'production'
-const CompressionPlugin = require('compression-webpack-plugin');
-const USE_CDN=false //这个开关用来控制CDN
+const CompressionPlugin = require('compression-webpack-plugin')
+const USE_CDN = false // 这个开关用来控制CDN
 // 优化打包
 // externals
 const externals = {
@@ -20,10 +20,10 @@ const cdn = {
     js: []
   },
   // 生产环境
-  //vue3 要使用 mavon-editor@next 该版本未发布npm,暂时无法cdn。
+  // vue3 要使用 mavon-editor@next 该版本未发布npm,暂时无法cdn。
   build: {
     css: [
-      'https://cdn.jsdelivr.net/npm/element-plus@2.3.4/dist/index.css',
+      'https://cdn.jsdelivr.net/npm/element-plus@2.3.4/dist/index.css'
       // 'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/css/index.css'
     ],
     js: [
@@ -44,7 +44,7 @@ const VueConfig = {
   devServer: {
     host: '0.0.0.0',
     port: 9000,
-    //使用proxy生产时nginx记得使用反向代理！！
+    // 使用proxy生产时nginx记得使用反向代理！！
     proxy: {
       '/api': {
         target: IS_PROD ? 'https://company.zerotower.cn' : 'http://localhost:3000',
@@ -86,7 +86,7 @@ const VueConfig = {
   },
   chainWebpack: (config) => {
     config.when(IS_PROD, (config) => {
-      //生产环境时使用生产环境的入口文件，清空原来的，再添加新的入口文件
+      // 生产环境时使用生产环境的入口文件，清空原来的，再添加新的入口文件
       config.entry('app').clear().add('./src/main-prod.ts')
       config.output.filename('js/[name].js')
       config.output.chunkFilename('js/[name].js')
@@ -111,7 +111,7 @@ const VueConfig = {
     })
     // 开发阶段
     config.when(process.env.NODE_ENV === 'development', config => {
-      //development时使用自己的入口文件
+      // development时使用自己的入口文件
       config.entry('app').clear().add('./src/main-dev.ts')
       config.plugin('html').tap(args => {
         args[0].cdn = cdn.dev
@@ -121,11 +121,11 @@ const VueConfig = {
     })
   },
   pluginOptions: {
-    //目的是注入全局的less变量
+    // 目的是注入全局的less变量
     'style-resources-loader': {
       preProcessor: 'less',
       patterns: [
-       path.resolve(__dirname,'./src/assets/style/variable.less')
+        path.resolve(__dirname, './src/assets/style/variable.less')
       ]
     }
   }

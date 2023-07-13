@@ -10,7 +10,7 @@
     <AwFooter></AwFooter>
   </div>
 </template>
-<script lang="ts" setup name="">
+<script lang="ts" setup name="Home">
 import AwHeader from '@/components/public/Header.vue'
 import AwFooter from '@/components/public/Footer.vue'
 import OverLay from '@/components/OverLayText.vue'

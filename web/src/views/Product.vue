@@ -32,12 +32,12 @@
 <script lang="ts" setup>
 import AwHeader from '@/components/public/Header.vue'
 import mainStore from '@/store'
-import { computed, onBeforeMount, ref, watch } from 'vue'
+import { computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from 'vue'
 import { getProductLit } from '@/apis/product'
 import { onBeforeRouteLeave } from 'vue-router'
 
 const loading = ref(false)
-const products = ref<Array<any>>([])
+const products = ref<Record<string, string>[]>([])
 const activeIndex = ref(0)
 const transitionName = ref('')
 const scrolling = ref(false)
@@ -52,6 +52,7 @@ watch(() => activeIndex.value, (newIndex, oldIndex) => {
   transitionName.value = newIndex < oldIndex ? 'move-down' : 'move-up'
 })
 
+// 挂载前
 onBeforeMount(async () => {
   mainStore.commit('setHeaderLogo', {
     headerLogoShow: false
@@ -72,7 +73,16 @@ onBeforeMount(async () => {
     loading.value = false
   }
 })
-
+// 挂载完成
+onMounted(() => {
+  window.addEventListener('mousewheel', mousewheelHandler)
+  window.addEventListener('DOMMouseScroll', mousewheelHandler)
+})
+// 卸载后
+onUnmounted(() => {
+  window.removeEventListener('mousewheel', mousewheelHandler)
+  window.removeEventListener('DOMMouseScroll', mousewheelHandler)
+})
 function mousewheelHandler (e: Event) {
   if (scrolling.value) {
     return
