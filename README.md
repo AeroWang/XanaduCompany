@@ -46,10 +46,12 @@ server---后端服务
 2. 系统后台管理（https://xanadu.aerowang.cn/admin）
 
    - 账户：youke，密码：a123456
+   - 管理员：admin 密码：654321
 
      也可以在进行注册
 ## 五、如何本地运行
-
+**有问题看一眼package.json中的scripts，别无中生有dev,running 啥命令，
+命令执行不了肯定没有定义!**
 1. 先启动后端(server目录下)
 ```bash
 npm install
@@ -61,17 +63,26 @@ npm run start(本地启动)
 2. 启动前端（web 或者 admin目录下）
 ```bash
 # 1.安装
-npm install / yarn install
+npm install
+   #又或者
+pnpm install
 # 2.启动
-npm run dev / yarn dev
+npm run serve 
+   #又或者
+pnpm serve
 # 3.打包
-npm run build / yarn build
+npm run build 
+ #又或者
+pnpm build
 # 4.清除 node_modules
-npm run clear / yarn clear
+npm run clear 
+  # 又或者
+pnpm clear #由于rmdir 安装在这里，它也会清掉，就是自己干了自己
+#会有一条报错出现，请无视它
 ```
-yarn命令请提前全局安装
+pnpm 命令请提前全局安装
 ```bash
-npm i yarn -g
+npm i pnpm -g
 ```
 
 ## 六、补充说明
