@@ -33,11 +33,13 @@
                 <div class="media">
                     <div :class="item.name" v-for="(item, index) in focus_icon" :key="index">
                         <el-popover placement="top" trigger="hover">
-                            <div class="qr_popover">
+                          <template #reference>
+                              <div class="qr_popover">
                                 <img :src="item.qr" alt="">
                                 <h2>{{ item.info }}</h2>
-                            </div>
-                            <img :src="item.path" :alt="item.name" slot="reference">
+                              </div>
+                          </template>
+                          <img :src="item.path" :alt="item.name">
                         </el-popover>
                     </div>
                 </div>
@@ -183,26 +185,17 @@ h2 {
 
     .focus_us {
         text-align: left;
-        padding-left: 73px;
+        padding-left: 10px;
 
         .media {
             margin-top: 18px;
             display: flex;
+            justify-content: space-evenly;
         }
 
         span {
             margin-right: 18px;
             flex: 0 0 auto;
-        }
-
-        img {
-            width: 32px;
-        }
-
-        .weixin img {
-            width: 38px;
-            position: relative;
-            top: -2px;
         }
 
         h2 {
@@ -285,13 +278,15 @@ h2 {
 }
 
 .qr_popover {
-    width: 100%;
+  //  width: 130px;
+  //height: 130px;
     text-align: center;
 
     img {
-        width: 130px;
-        height: 130px;
+        width: 80px;
+        height: 80px;
         margin-bottom: 10px;
     }
+  //margin-left: 30px;
 }
 </style>

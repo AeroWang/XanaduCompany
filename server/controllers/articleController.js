@@ -3,7 +3,12 @@ const moment = require('moment') // 时间格式化插件
 module.exports = {
   // 根据新闻 类型、日期 查询，并按日期排序
   newsList: async (ctx) => {
-    const params = ctx.query
+    let {query} = ctx;
+    const params={
+      pagenum:1,
+      pagesize:10,
+      ...query
+    }
     const {
       count,
       rows
