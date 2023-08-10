@@ -86,6 +86,22 @@ pnpm 命令请提前全局安装
 npm i pnpm -g
 ```
 
+## 六、docker
+
+docker RUN 的第一行替换了debian源，可以自行修改为对应系统（目前只有liunx），docker构建后会自动启动目录下初始化mysql的脚本，自动部署
+
+命令
+
+```bash
+# 主目录下
+docker build -t xanadu .
+# 启动镜像
+docker run -dit --privileged=true xanadu
+# 之后先进入后端 server 下载依赖执行，再进入前端下载依赖执行
+```
+
+docker并未使用go版本
+
 ## 六、补充说明
 
 由于本系统进行了CDN加载资源优化，所以运行本系统务必连接一个比较快速稳定的网络，否则系统页面将会出现一些错误！
