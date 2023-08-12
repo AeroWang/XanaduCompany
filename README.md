@@ -154,4 +154,14 @@ location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|webp|jfif)$
 ## 七、最后的最后
 
 *记得给star哦ღ( ´･ᴗ･` )~*
-新群：434063310。(新群群主并非原作者，只是被作者美貌折服心肝情愿来打工)
+新群：434063310。（不保证回复时效性）
+## 八、zerotower69最后一次更新说明
+1.项目的初衷是为了让大家有个vue3版本的语法对比，因此很多功能都和vue2分支的保持一致。
+由于开发难免有bug,如有需要自行参考vue2分支或者部署版本修改。
+2.我并对不任何人的使用体验负责，有bug欢迎你向我提问，但我不是授课老师。你需要的授课老师可能是：
+* [菜鸟教程](https://www.runoob.com)
+* [bing](https://www.bing.com)
+* [bilibili](https://www.bilibili.com)
+* [vue3](https://vuejs.org)
+望各位详细阅读本文档，并参考优质一点的学习资源，入门时少看csdn!
+

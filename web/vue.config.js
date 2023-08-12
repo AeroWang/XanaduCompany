@@ -44,7 +44,11 @@ const VueConfig = {
   devServer: {
     host: '0.0.0.0',
     port: 9000,
-    // 使用proxy生产时nginx记得使用反向代理！！
+    /** 使用proxy生产时nginx记得使用反向代理！！
+     *反向代理的是接口，页面是静态的，不需要反向代理！
+    *如果你不会nginx,不建议看乱七八糟的博客，请在bilibili学习一下，或
+    * 参考菜鸟教程：https://www.runoob.com/w3cnote/nginx-install-and-config.html
+     * 如果你更懒一些，可以使用【宝塔面板进行部署】**/
     proxy: {
       '/api': {
         target: IS_PROD ? 'https://company.zerotower.cn' : 'http://localhost:3000',
