@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:5.7
+    container_name: xanadu-db
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=Xanadu
+    restart: always
+    # 初始命令
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    # 数据挂载
+    volumes:
+      - /data/mysql/data:/var/lib/mysql
+      - ./server/init:/docker-entrypoint-initdb.d/
+
+  backend:
+    image: xanadu-server
+    container_name: xanadu-server
+    build:
+      context: ./server
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    restart: always
+
+  frontend:
+    image: xanadu-frontend
+    container_name: xanadu-frontend
+    build:
+      context: .
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+    restart: always

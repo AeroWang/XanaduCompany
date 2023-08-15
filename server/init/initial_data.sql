@@ -13,11 +13,11 @@
 
  Date: 01/07/2021 09:49:46
 */
-
-USE Xanadu;
+USE mysql;
+CREATE DATABASE IF NOT EXISTS Xanadu DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `Xanadu`;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
 -- ----------------------------
 -- Table structure for aw_accounts
 -- ----------------------------
@@ -497,3 +497,6 @@ CREATE TABLE `menu_permissions`  (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- USE MySQL
+-- grant all privileges on *.* to 'root'@'%' identified by '12345678' with grant option;
+-- flush privileges;

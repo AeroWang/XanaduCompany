@@ -88,17 +88,38 @@ npm i pnpm -g
 
 ## 六、docker
 
-docker RUN 的第一行替换了debian源，可以自行修改为对应系统（目前只有liunx），docker构建后会自动启动目录下初始化mysql的脚本，自动部署
+docker 一键自动部署
 
 命令
 
 ```bash
 # 主目录下
-docker build -t xanadu .
-# 启动镜像
-docker run -dit --privileged=true xanadu
-# 之后先进入后端 server 下载依赖执行，再进入前端下载依赖执行
+docker compose up
+
+# 即可访问
 ```
+
+需要更改以下文件:
+
+- `./admin/.env.production`
+
+  `VUE_APP_BASE_API = '你自己的域名:3000/api/v1'`
+
+- `./admin/vue.config.js`
+
+  line.27 `publicPath: '/',` => `publicPath: '/admin/',` 
+
+- `./server/config/dbinfo.js`
+
+  `host: "localhost",` => `host: "xanadu-db",`
+
+- `./web/.env.production`
+
+  `VUE_APP_PRODURL = "你自己的域名/admin/#/login"`
+
+- `./web/src/utils/request.ts`
+
+  `baseURL: '/api'` => `你自己的域名:3000/api`
 
 docker并未使用go版本
 

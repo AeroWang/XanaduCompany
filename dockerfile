@@ -1,18 +1,24 @@
-FROM mysql:5.7
+FROM node:16 as build
 
-EXPOSE 3306
-ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
-SHELL ["/bin/bash", "-c"]
+WORKDIR /app
 
-RUN sed -i -E 's/(deb|security).debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list \
-    && gpg --keyserver keyserver.ubuntu.com --recv 467B942D3A79BD29 && gpg --export --armor 467B942D3A79BD29 | apt-key add - \
-    && apt-get update && apt-get install -y curl git-all python3 \
-    && rm -rf /var/lib/apt/lists/* \
-    && curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash \
-    && source /root/.bashrc \
-    && nvm install 16 \
-    && npm i -g vue
+COPY ./admin/package.json /app/admin/package.json
+COPY ./admin/package-lock.json /app/admin/package-lock.json
+COPY ./web/package.json /app/web/package.json
+COPY ./web/package-lock.json /app/web/package-lock.json
 
-COPY . /home/company
+RUN npm config set registry https://registry.npmmirror.com \
+  && cd /app/admin && npm install \
+  && cd /app/web && npm install
 
-CMD ["sh", "/home/company/mysql/setup.sh"]
+COPY ./admin /app/admin
+COPY ./web /app/web
+
+RUN cd /app/admin && npm run build:prod \
+  && cd /app/web && npm run build
+
+FROM nginx
+
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/admin/dist /usr/share/nginx/html/admin
+COPY --from=build /app/web/dist /usr/share/nginx/html/web
