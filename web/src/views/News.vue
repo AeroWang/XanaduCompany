@@ -51,7 +51,7 @@
           <el-tabs
             class="list-left"
             v-model="pageInfo.activeName"
-            @tab-click="handleClick"
+            @tab-change="handleClick"
           >
             <el-tab-pane :label="newsTabs[0].name" :name="newsTabs[0].id">
               <news-list
