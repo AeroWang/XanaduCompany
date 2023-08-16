@@ -66,7 +66,10 @@ class ArticleService {
   async getHotNews () {
     return News.findAll({
       where: {
-        is_hot: 1
+        [Op.and]: [
+          { is_hot: 1 },
+          { state: 1 }
+        ]  
       },
       attributes: ['news_id', 'news_title', 'news_path', 'publish_time']
     })
