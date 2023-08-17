@@ -17,7 +17,6 @@ services:
       - ./server/init:/docker-entrypoint-initdb.d/
 
   backend:
-    image: xanadu-server
     container_name: xanadu-server
     build:
       context: ./server
@@ -28,7 +27,6 @@ services:
     restart: always
 
   frontend:
-    image: xanadu-frontend
     container_name: xanadu-frontend
     build:
       context: .
