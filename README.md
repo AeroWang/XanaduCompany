@@ -94,7 +94,7 @@ docker 一键自动部署
 
 ```bash
 # 主目录下
-docker compose up
+docker compose up -d
 
 # 即可访问
 ```
@@ -123,7 +123,7 @@ docker compose up
 
 docker并未使用go版本
 
-## 六、补充说明
+## 七、补充说明
 
 由于本系统进行了CDN加载资源优化，所以运行本系统务必连接一个比较快速稳定的网络，否则系统页面将会出现一些错误！
 
