@@ -86,7 +86,44 @@ pnpm 命令请提前全局安装
 npm i pnpm -g
 ```
 
-## 六、补充说明
+## 六、docker
+
+docker 一键自动部署
+
+命令
+
+```bash
+# 主目录下
+docker compose up -d
+
+# 即可访问
+```
+
+需要更改以下文件:
+
+- `./admin/.env.production`
+
+  `VUE_APP_BASE_API = '你自己的域名:3000/api/v1'`
+
+- `./admin/vue.config.js`
+
+  line.27 `publicPath: '/',` => `publicPath: '/admin/',` 
+
+- `./server/config/dbinfo.js`
+
+  `host: "localhost",` => `host: "xanadu-db",`
+
+- `./web/.env.production`
+
+  `VUE_APP_PRODURL = "你自己的域名/admin/#/login"`
+
+- `./web/src/utils/request.ts`
+
+  `baseURL: '/api'` => `你自己的域名:3000/api`
+
+docker并未使用go版本
+
+## 七、补充说明
 
 由于本系统进行了CDN加载资源优化，所以运行本系统务必连接一个比较快速稳定的网络，否则系统页面将会出现一些错误！
 

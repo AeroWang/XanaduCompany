@@ -75,6 +75,7 @@ import { computed, onBeforeMount, onMounted, onUnmounted, ref, reactive } from '
 import { getJobListApi, getJobFilter } from '@/apis/job'
 import { Search } from '@element-plus/icons-vue'
 
+const jobCategory = ref()
 const jobCategories = ref([])
 const jobCategoryProps = ref({
   children: 'children',
@@ -161,7 +162,14 @@ function search () {
   getJobList()
 }
 
-function clearFilter () { }
+function clearFilter() {
+  jobCategory.value.getCheckedKeys().forEach((v:number, i:number) =>
+    jobCategory.value.setChecked(v,false,true)
+  );
+  job_category_id_list.value = []
+  location_code_list.value = []
+  getJobList()
+}
 
 // 请求职位列表
 async function getJobList () {
@@ -191,7 +199,10 @@ async function getJobConfigRequest () {
   }
 }
 
-function jobCategoryChange () { }
+function jobCategoryChange() {
+  job_category_id_list.value = jobCategory.value.getCheckedKeys()
+  getJobList()
+}
 
 function cityChange (value: any) {
   location_code_list.value = value
