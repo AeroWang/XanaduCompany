@@ -1,4 +1,3 @@
-# 请注意看本文档，环境说明都在这了！数据库文件请加群后自行翻阅群文件，不要都知道加群还要问为什么项目里找不到数据库文件！数据库版本5.X。
 ## 一、采用技术方案
 
 该系统采用的主要技术如下：
@@ -24,7 +23,7 @@ vue3为主分支，vue2版本请参考[vue2](https://github.com/AeroWang/XanaduC
 ## 二、开发环境
 
 1. 操作系统：Windows10
-2. 数据库：MySQL（v5.7.7-rc-log，版本号须大于5.7）
+2. 数据库：MySQL（v5.7.7）
 3. Web服务器：Nginx 
 4. 开发工具：Webstorm
 5. 系统基础环境：Node.js
@@ -141,7 +140,7 @@ docker并未使用go版本
 
 4.项目运行前，请一定要npm install安装相关的依赖，并进入到pcweb端、管理端、后端看看各自的package.json文件看看**scripts**部分，确认你要运行的命令是已经定义了的。都没有定义 dev命令，你偏偏要执行`npm run dev`，肯定是要报错的，而且第一句报错信息的意思就会是 dev不在 scripts中，反正你看到 package.json和scripts两个关键字出现在你报错的第一行肯定就是执行了未定义的命令
 
-5.数据库脚本请参考QQ群：434063310（这个群主并非原作者，而是自愿来维护的）。
+5.**数据库脚本** （[initial_data.sql](/server/init/initial_data.sql)）请参考QQ群：434063310（这个群主并非原作者，而是自愿来维护的）。
 
 6.node推荐使用nvm版本管理工具，[windows用户](https://github.com/coreybutler/nvm-windows/releases)直接使用.exe无烦恼安装, mac用户可以使用brew安装
 ```bash
